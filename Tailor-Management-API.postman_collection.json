@@ -1,0 +1,458 @@
+{
+  "info": {
+    "_postman_id": "tailor-management-api",
+    "name": "Tailor Management API",
+    "description": "API collection for Tailor Management system with Supabase authentication",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:3000",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "phone_number",
+      "value": "+91XXXXXXXXXX",
+      "type": "string"
+    },
+    {
+      "key": "tailor_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "user_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "measurement_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Send OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"{{phone_number}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/send-otp",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "send-otp"]
+            }
+          }
+        },
+        {
+          "name": "Verify OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"{{phone_number}}\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/verify-otp",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "verify-otp"]
+            }
+          }
+        },
+        {
+          "name": "Sign Out",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/sign-out",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "sign-out"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tailor Management",
+      "item": [
+        {
+          "name": "Create Tailor Profile",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"phoneNumber\": \"{{phone_number}}\",\n  \"email\": \"john@example.com\",\n  \"address\": \"123 Main St\",\n  \"shopName\": \"John's Tailoring\",\n  \"specialization\": \"suits\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tailors/profile",
+              "host": ["{{base_url}}"],
+              "path": ["tailors", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Tailor Profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tailors/profile/{{tailor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["tailors", "profile", "{{tailor_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Tailor Profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe Updated\",\n  \"shopName\": \"John's Premium Tailoring\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/tailors/profile/{{tailor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["tailors", "profile", "{{tailor_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Tailors",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tailors",
+              "host": ["{{base_url}}"],
+              "path": ["tailors"]
+            }
+          }
+        },
+        {
+          "name": "Get Tailor Statistics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tailors/stats/{{tailor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["tailors", "stats", "{{tailor_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Tailor Profile",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/tailors/profile/{{tailor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["tailors", "profile", "{{tailor_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "User Management",
+      "item": [
+        {
+          "name": "Create User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phoneNumber\": \"+91XXXXXXXXXX\",\n  \"name\": \"Jane Smith\",\n  \"email\": \"jane@example.com\",\n  \"address\": \"456 Oak Ave\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Get User",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update User",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Smith Updated\",\n  \"address\": \"789 Pine Rd\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get All Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users",
+              "host": ["{{base_url}}"],
+              "path": ["users"]
+            }
+          }
+        },
+        {
+          "name": "Delete User",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/users/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["users", "{{user_id}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Measurements",
+      "item": [
+        {
+          "name": "Create Measurement",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": \"{{user_id}}\",\n  \"measurementType\": \"chest\",\n  \"value\": 42.5,\n  \"unit\": \"cm\",\n  \"notes\": \"Standard measurement\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/measurements",
+              "host": ["{{base_url}}"],
+              "path": ["measurements"]
+            }
+          }
+        },
+        {
+          "name": "Get Measurement",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/measurements/{{measurement_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["measurements", "{{measurement_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get User Measurements",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/measurements/user/{{user_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["measurements", "user", "{{user_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Tailor Measurements",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/measurements/tailor/{{tailor_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["measurements", "tailor", "{{tailor_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Measurement",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"value\": 43.0,\n  \"notes\": \"Updated measurement\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/measurements/{{measurement_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["measurements", "{{measurement_id}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Measurement",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/measurements/{{measurement_id}}",
+              "host": ["{{base_url}}"],
+              "path": ["measurements", "{{measurement_id}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
